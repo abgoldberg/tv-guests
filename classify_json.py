@@ -7,9 +7,15 @@ import types
 from text.classifiers import NaiveBayesClassifier
 from text.classifiers import DecisionTreeClassifier
 
+# Identity feature extractor
+def token_extractor(document):
+    return dict((token,True) for token in document.split())
+
 input_file = sys.argv[1]
-#input_file = 'scrapy_tds/items.json.extended'
 data = json.load(open(input_file))
+
+print "Loading %s episodes from %s" % (len(data), input_file)
+raw_input("Press Enter to compute pseudo labels...")
 
 punct_re = re.compile(r'[' + string.punctuation + ']')
 def get_description_tokens(items):
@@ -122,6 +128,14 @@ unlabeled_resources = []
 unlabeled_data = []
 year_stats = {}
 
+from dateutil import parser
+for idx,episode in enumerate(data):
+    date_string = "%s, %s" % (episode.get('date'), episode.get('year'))
+    parsed_date = parser.parse(date_string)
+    episode['date_object'] = parsed_date
+
+data = sorted(data, key=lambda x: x.get('date_object'))
+
 print "%50s" % ("Guest")
 for idx,episode in enumerate(data):
     if len(episode['guest_predicate_objects']) > 0:
@@ -142,7 +156,7 @@ for idx,episode in enumerate(data):
             if predictor(properties):
                 unknown = False
                 label = get_class_label(predictor.__name__)
-                print '\t%s' % label
+                print '\t%s' % label,
 
                 if label not in year_stats[year]:
                     year_stats[year][label] = 0
@@ -167,14 +181,14 @@ for idx,episode in enumerate(data):
 
         print ""
 
+raw_input("Press Enter for year stats...")
+
 for year,counts in sorted(year_stats.items()):
     print "Year: %s" % year
     for label,count in sorted(counts.items()):
         print "\t%3d %s" % (count, label)
 
-# Identity feature extractor
-def token_extractor(document):
-    return dict((token,True) for token in document.split())
+raw_input("Press Enter to train classifiers using the pseudo-labeled data...")
 
 # Create a classifier for each class
 classifiers = {}
@@ -195,11 +209,9 @@ results = [(unlabeled_resources[i],
                  for c in classifiers))
            for i in range(len(unlabeled_data))]
 
-import pprint
-pprint.pprint(results)
-
-#classifier = NaiveBayesClassifier(labeled_data[:300])
-#classifier = DecisionTreeClassifier(labeled_data[:150])
-
-import pdb
-pdb.set_trace()
+for resource, predictions in results:
+    print "%s" % resource
+    sorted_predictions = sorted(predictions.items(), key=lambda x: x[1], reverse=True)
+    for i in range(3):
+        print "\t%0.3f\t%s" % (sorted_predictions[i][1], sorted_predictions[i][0])
+    print ""
