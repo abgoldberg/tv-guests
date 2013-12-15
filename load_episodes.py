@@ -45,6 +45,17 @@ if __name__=="__main__":
             log.info("Added episode %s to the database", eid)
 
             for resource in episode.get('guest_resources', []):
+                # Add guest row if necessary
+                cursor.execute("SELECT resource FROM guests WHERE resource = :resource",
+                               {"resource": resource})
+                rows = cursor.fetchall()
+                if len(rows) == 0:
+                    cursor.execute("INSERT OR IGNORE INTO guests (resource) VALUES (:resource)",
+                                   {"resource": resource})
+                    log.info("Added row for guest %s", resource)
+                else:
+                    log.info("Already have row for guest %s", resource)
+
                 cursor.execute("INSERT INTO appearances (eid, resource) VALUES (:eid, :resource)",
                                { "eid": eid, "resource": resource })
                 log.info("Added appearance for %s for episode %s", resource, eid)

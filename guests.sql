@@ -7,8 +7,10 @@ CREATE TABLE episodes (
        promotion TEXT);
 CREATE TABLE appearances (
        eid INTEGER REFERENCES episodes(eid),
-       resource TEXT,
-       dbpedia TEXT,
+       resource TEXT REFERENCES guests(resource),
        heuristic_labels TEXT,
        ssl_labels TEXT,
        manual_labels TEXT);
+CREATE TABLE guests (
+       resource TEXT PRIMARY KEY,
+       dbpedia TEXT);

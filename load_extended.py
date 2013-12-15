@@ -36,15 +36,21 @@ if __name__=="__main__":
             'promotion': episode['promotion']
             }
 
+        # Check if we have any data for this episode in the database yet
         cursor.execute("SELECT eid FROM episodes WHERE eid = :eid", { "eid": eid})
         rows = cursor.fetchall()
         if len(rows) != 0:
             for resource, predicate_objects in episode.get('guest_predicate_objects', {}).items():
-                dbpedia = json.dumps(predicate_objects)
-
-                cursor.execute("UPDATE appearances SET dbpedia = :dbpedia WHERE eid = :eid AND resource = :resource",
-                               { "eid": eid, "resource": resource, "dbpedia": dbpedia })
-                log.info("Added dbpedia data for %s for episode %s", resource, eid)
+                # Check if we already have dbpedia data for this guest
+                cursor.execute("SELECT dbpedia FROM guests WHERE resource = :resource AND dbpedia IS NOT NULL",
+                               { "resource": resource })
+                rows = cursor.fetchall()
+                if len(rows) == 0:
+                    cursor.execute("UPDATE guests SET dbpedia = :dbpedia WHERE resource = :resource",
+                                   { "resource": resource, "dbpedia": json.dumps(predicate_objects) })
+                    log.info("Added dbpedia data for %s", resource)
+                else:
+                    log.info("Already have dbpedia data for %s", resource)
         else:
             log.info("Don't have episode %s in the database", eid)
 
