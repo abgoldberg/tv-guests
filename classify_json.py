@@ -43,47 +43,46 @@ def predict_politician(items):
             return True
 
     tokens = items['description_tokens']
-    keywords = set(['politician', 'judge', 'mayor', 'congressman', 'senator'])
+    keywords = set(['politician', 'judge', 'mayor', 'congressman', 'senator',
+                    'elected', 'governor', 'representative', 'congresswoman',
+                    'secretary', 'candidate', 'prime', 'lady', 'president'])
     return len(tokens & keywords) > 0
 
-def predict_clergy(items):
+def predict_policy(items):
     tokens = items['description_tokens']
-    keywords = set(['clergyman', 'reverend', 'bishop', 'pope', 'pastor'])
+    keywords = set(['policy', 'lobby', 'lobbyist', 'ngo', 'planned', 'parenthood', 'advocate', 'advocacy', 'organization', 'consultant', 'activist'])
     return len(tokens & keywords) > 0
 
-def predict_business(items):
+def predict_academic(items):
+    keys = ["http://dbpedia.org/property/workInstitutions"]
+    for key in keys:
+        if key in items:
+            return True
+
     tokens = items['description_tokens']
-    keywords = set(['business', 'businessman'])
+    keywords = set(['professor', 'academic', 'phd', 'hd', 'dr', 'scientist', 'university', 'institute', 'historian'])
     return len(tokens & keywords) > 0
 
 def predict_journalist(items):
-    pairs = [("http://dbpedia.org/ontology/occupation", "http://dbpedia.org/resource/Journalist")]
+    pairs = [("http://dbpedia.org/ontology/occupation", "http://dbpedia.org/resource/Journalist"),
+             ("http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://dbpedia.org/class/yago/Reporter110521662")]
     for key, value in pairs:
         if value in items.get(key, []):
             return True
 
     tokens = items['description_tokens']
-    keywords = set(['journalist', 'news', 'newsmedia', 'correspondent', 'commentator'])
+    keywords = set(['journalist', 'news', 'newsmedia', 'correspondent', 'commentator', 'host', 'moderator',
+                    'cnn', 'fox', 'nbc', 'abc', 'cbs', 'msnbc', 'post', 'times', 'tribune', 'magazine', 'newspaper'])
     return len(tokens & keywords) > 0
 
-def predict_writer(items):
-    tokens = items['description_tokens']
-    keywords = set(['writer', 'poet', 'author', 'historian'])
-    return len(tokens & keywords) > 0
+def predict_musician(items):
+    pairs = []
+    for key, value in pairs:
+        if value in items.get(key, []):
+            return True
 
-def predict_academic(items):
     tokens = items['description_tokens']
-    keywords = set(['professor', 'academic'])
-    return len(tokens & keywords) > 0
-
-def predict_athlete(items):
-    tokens = items['description_tokens']
-    keywords = set(['athlete', 'sports', 'football', 'soccer', 'baseball', 'basketball', 'tennis', 'hockey'])
-    return len(tokens & keywords) > 0
-
-def predict_actor(items):
-    tokens = items['description_tokens']
-    keywords = set(['actor', 'actress', 'director', 'filmaker', 'filmmaker', 'screenwriter', 'artist'])
+    keywords = set(['musician', 'singer', 'song', 'songwriter', 'band', 'performer', 'guitar', 'piano'])
     return len(tokens & keywords) > 0
 
 def predict_comedian(items):
@@ -96,25 +95,37 @@ def predict_comedian(items):
     keywords = set(['comedian', 'comic'])
     return len(tokens & keywords) > 0
 
-def predict_performer(items):
-    pairs = []
+def predict_actor(items):
+    pairs = [("http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://dbpedia.org/class/yago/DocumentaryFilmDirectors"),
+             ("http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://dbpedia.org/class/yago/AmericanFilmDirectors")]
     for key, value in pairs:
         if value in items.get(key, []):
             return True
 
     tokens = items['description_tokens']
-    keywords = set(['musician', 'singer', 'song', 'songwriter', 'band', 'performer'])
+    keywords = set(['actor', 'actress', 'director', 'filmaker', 'filmmaker', 'screenwriter', 'artist', 'entertainer', 'entertainment'])
     return len(tokens & keywords) > 0
 
-def predict_activist(items):
-    pairs = []
-    for key, value in pairs:
-        if value in items.get(key, []):
-            return True
-
+def predict_athlete(items):
     tokens = items['description_tokens']
-    keywords = set(['activist'])
+    keywords = set(['athlete', 'sports', 'football', 'soccer', 'baseball', 'basketball', 'tennis', 'hockey', 'olympic', 'olympics'])
     return len(tokens & keywords) > 0
+
+def predict_writer(items):
+    tokens = items['description_tokens']
+    keywords = set(['writer', 'poet', 'author', 'novel', 'novelist'])
+    return len(tokens & keywords) > 0
+
+def predict_clergy(items):
+    tokens = items['description_tokens']
+    keywords = set(['clergyman', 'reverend', 'bishop', 'pope', 'pastor', 'rabbi'])
+    return len(tokens & keywords) > 0
+
+def predict_business(items):
+    tokens = items['description_tokens']
+    keywords = set(['business', 'businessman', 'ceo', 'ipo', 'stock'])
+    return len(tokens & keywords) > 0
+
 
 def get_class_label(p):
     return p.replace('predict_', '').title()
