@@ -1,0 +1,1 @@
+select resource, show, count(*) as count from episodes join appearances using (eid) join guests using (resource) group by resource, show order by count;

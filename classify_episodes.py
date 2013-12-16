@@ -136,7 +136,33 @@ def get_class_label(p):
 module = sys.modules[__name__]
 predictors = [module.__dict__.get(a) for a in dir(module) if isinstance(module.__dict__.get(a), types.FunctionType) and a.startswith("predict_")]
 
-def train_classifiers(labeled_data, N):
+def clear_labels(cursor, source):
+    cursor.execute("DELETE FROM labels WHERE source = ?", (source,))
+
+def predict_using_heuristics(cursor):
+    cursor.execute("SELECT eid, aid, resource, dbpedia FROM episodes " +
+                   "JOIN appearances USING (eid) " +
+                   "JOIN guests USING (resource) " +
+                   "ORDER BY airdate")
+
+    rows = cursor.fetchall()
+    for row in rows:
+        log.info("episode %s, appearance id %s, resource %s", row['eid'], row['aid'], row['resource'])
+
+        predicate_objects = json.loads(row['dbpedia'])
+        properties = pairs_to_dict(predicate_objects)
+
+        for predictor in predictors:
+            if predictor(properties):
+                label = get_class_label(predictor.__name__)
+                log.info('\t%s', label)
+
+                cursor.execute("INSERT INTO labels (aid, label, source) VALUES (:aid, :label, :source)",
+                               { 'aid': row['aid'], 'label': label, 'source': 'heuristics' })
+
+def train_classifiers(cursor, N):
+    labeled_data = find_labeled_data(cursor, N)
+
     # Create a classifier for each class
     classifiers = {}
     for predictor in predictors:
@@ -144,54 +170,28 @@ def train_classifiers(labeled_data, N):
         classifiers[label] = NaiveBayesClassifier([], token_extractor)
 
     # For each labeled example, train all classifiers as either positive or negative example
-    for features,label in labeled_data[:N]:
+    for features,label in labeled_data:
         for c in classifiers:
             if label == c:
                 classifiers[c].update([(features,"positive")])
             else:
                 classifiers[c].update([(features,"negative")])
 
+    return classifiers
 
-if __name__=="__main__":
-    db_file = sys.argv[1]
-    conn = sqlite3.connect(db_file)
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
+def find_labeled_data(cursor, N):
+    # TBD: Find labeled data (N random examples with some labels so far)
+    # Maybe find N per class (and update the training above)
+    pass
 
-    cursor.execute("SELECT eid, resource, dbpedia FROM episodes " +
-                   "JOIN appearances USING (eid) " +
-                   "JOIN guests USING (resource) " +
-                   "ORDER BY airdate")
-
-    rows = cursor.fetchall()
-    for row in rows:
-        log.info("episode %s, resource %s", row['eid'], row['resource'])
-
-        predicate_objects = json.loads(row['dbpedia'])
-        properties = pairs_to_dict(predicate_objects)
-
-        label = 'Unknown'
-        for predictor in predictors:
-            if predictor(properties):
-                label = get_class_label(predictor.__name__)
-                log.info('\t%s', label)
-
-                # TBD: Write label to database
-
-    #raw_input("Press Enter to train classifiers using the pseudo-labeled data...")
-
-    # TBD: Find labeled data in database
-
-    #classifiers = train_classifiers(labeled_data, 200)
-
-    # TBD: Find unlabeled data in database, classify it
+def predict_using_classifiers(cursor, classifiers):
+    # TBD: Find unlabeled data
 
     #results = [(unlabeled_resources[i],
     #            dict((c,classifiers[c].prob_classify(unlabeled_data[i][0]).prob('positive'))
     #                 for c in classifiers))
     #           for i in range(len(unlabeled_data))]
 
-    # TBD: Write SSL labels to database with confidences
 
     #for resource, predictions in results:
     #    print "%s" % resource
@@ -199,3 +199,30 @@ if __name__=="__main__":
     #    for i in range(3):
     #        print "\t%0.3f\t%s" % (sorted_predictions[i][1], sorted_predictions[i][0])
     #    print ""
+
+    # TBD: Write SSL labels to database with confidences
+
+    pass
+
+if __name__=="__main__":
+    db_file = sys.argv[1]
+    conn = sqlite3.connect(db_file)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    # Clear any labels so far
+    clear_labels(cursor, 'heuristics')
+    clear_labels(cursor, 'ssl')
+
+    predict_using_heuristics(cursor)
+
+    #raw_input("Press Enter to train classifiers using the pseudo-labeled data...")
+
+    # Train classifiers using N labeled examples based on heuristics
+    #N = 500
+    #classifiers = train_classifiers(cursor, N)
+
+    # Predict labels for examples that were not labeled yet
+    #predict_using_classifiers(cursor, classifiers)
+
+    conn.commit()
