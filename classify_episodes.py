@@ -5,6 +5,7 @@ import json
 import time
 import types
 import sqlite3
+import random
 from text.classifiers import NaiveBayesClassifier
 from text.classifiers import DecisionTreeClassifier
 
@@ -16,11 +17,13 @@ try:
 except ImportError:
     pass
 
+punct_re = re.compile(r'[' + string.punctuation + ']')
+stop_words = set(punct_re.sub(' ', ' '.join(open('english.stop.txt', 'r').readlines()).lower()).split())
+
 # Identity feature extractor
 def token_extractor(document):
-    return dict((token,True) for token in document.split())
+    return dict((token,True) for token in document.split() if token not in stop_words)
 
-punct_re = re.compile(r'[' + string.punctuation + ']')
 def get_description_tokens(items):
     desc = ' '.join(items.get('http://dbpedia.org/property/shortDescription', []) +
                     items.get('http://purl.org/dc/elements/1.1/description', []) +
@@ -170,39 +173,78 @@ def train_classifiers(cursor, N):
         classifiers[label] = NaiveBayesClassifier([], token_extractor)
 
     # For each labeled example, train all classifiers as either positive or negative example
-    for features,label in labeled_data:
-        for c in classifiers:
-            if label == c:
-                classifiers[c].update([(features,"positive")])
-            else:
-                classifiers[c].update([(features,"negative")])
+    for label, documents in labeled_data.iteritems():
+        for document in documents:
+            for c in classifiers:
+                if label == c:
+                    classifiers[c].update([(document,"positive")])
+                else:
+                    classifiers[c].update([(document,"negative")])
 
     return classifiers
 
+def get_text_document(row):
+    # Generate 'document' for this example (we'll use a token_extractor later)
+    predicate_objects = json.loads(row['dbpedia'])
+    properties = pairs_to_dict(predicate_objects)
+    document = ' '.join(properties.keys() + list(properties['description_tokens']))
+    #document = ' '.join(list(properties['description_tokens']))
+    return document
+
 def find_labeled_data(cursor, N):
-    # TBD: Find labeled data (N random examples with some labels so far)
-    # Maybe find N per class (and update the training above)
-    pass
+    cursor.execute("SELECT eid, aid, resource, label, dbpedia FROM episodes " +
+                   "JOIN appearances USING (eid) " +
+                   "JOIN guests USING (resource) " +
+                   "JOIN labels USING (aid) " +
+                   "ORDER BY airdate")
+
+    labeled_data = {}
+
+    rows = cursor.fetchall()
+    for row in rows:
+        log.info("episode %s, appearance id %s, resource %s, label %s", row['eid'], row['aid'], row['resource'], row['label'])
+
+        label = row['label']
+
+        if label not in labeled_data:
+            labeled_data[label] = []
+
+        document = get_text_document(row)
+        labeled_data[label].append(document)
+
+    # Now pull out at most N random examples of each class
+    random.seed(1)
+    for label, documents in labeled_data.iteritems():
+        if len(documents) > N:
+            labeled_data[label] = random.sample(documents, N)
+
+    return labeled_data
 
 def predict_using_classifiers(cursor, classifiers):
-    # TBD: Find unlabeled data
+    # Find unlabeled data
+    cursor.execute("SELECT eid, appearances.aid, resource, dbpedia FROM episodes " +
+                   "JOIN appearances USING (eid) " +
+                   "JOIN guests USING (resource) " +
+                   "LEFT JOIN labels l ON l.aid = appearances.aid WHERE l.aid IS NULL " +
+                   "ORDER BY airdate")
+    rows = cursor.fetchall()
 
-    #results = [(unlabeled_resources[i],
-    #            dict((c,classifiers[c].prob_classify(unlabeled_data[i][0]).prob('positive'))
-    #                 for c in classifiers))
-    #           for i in range(len(unlabeled_data))]
+    for row in rows:
+        log.info("episode %s, appearance id %s, resource %s", row['eid'], row['aid'], row['resource'])
+        document = get_text_document(row)
 
+        predictions = {}
+        for label in classifiers:
+            pred = classifiers[label].prob_classify(get_text_document(row))
+            predictions[label] = pred.prob('positive')
 
-    #for resource, predictions in results:
-    #    print "%s" % resource
-    #    sorted_predictions = sorted(predictions.items(), key=lambda x: x[1], reverse=True)
-    #    for i in range(3):
-    #        print "\t%0.3f\t%s" % (sorted_predictions[i][1], sorted_predictions[i][0])
-    #    print ""
+            # Write classifier labels to database with confidences
+            cursor.execute("INSERT INTO labels (aid, label, source, confidence) VALUES (:aid, :label, :source, :confidence)",
+                           { 'aid': row['aid'], 'label': label, 'confidence': predictions[label], 'source': 'classifier' })
 
-    # TBD: Write SSL labels to database with confidences
-
-    pass
+        sorted_predictions = sorted(predictions.items(), key=lambda x: x[1], reverse=True)
+        for i in range(len(sorted_predictions)):
+            log.info("\t%0.3f\t%s" % (sorted_predictions[i][1], sorted_predictions[i][0]))
 
 if __name__=="__main__":
     db_file = sys.argv[1]
@@ -212,17 +254,24 @@ if __name__=="__main__":
 
     # Clear any labels so far
     clear_labels(cursor, 'heuristics')
-    clear_labels(cursor, 'ssl')
+    clear_labels(cursor, 'classifier')
 
     predict_using_heuristics(cursor)
 
-    #raw_input("Press Enter to train classifiers using the pseudo-labeled data...")
+    raw_input("Press Enter to train classifiers using the pseudo-labeled data...")
 
     # Train classifiers using N labeled examples based on heuristics
-    #N = 500
-    #classifiers = train_classifiers(cursor, N)
+    N = 100
+    classifiers = train_classifiers(cursor, N)
+
+    for c in classifiers:
+        log.info("Top 30 informative features of %s classifier:", c)
+        classifiers[c].show_informative_features(30)
+        log.info("")
+
+    raw_input("Press Enter to train classifiers using the pseudo-labeled data...")
 
     # Predict labels for examples that were not labeled yet
-    #predict_using_classifiers(cursor, classifiers)
+    predict_using_classifiers(cursor, classifiers)
 
     conn.commit()
