@@ -19,6 +19,7 @@ if __name__=="__main__":
     conn = sqlite3.connect('guests.dat')
     cursor = conn.cursor()
 
+    added = 0
     for episode in data:
         #log.debug("episode = %s", episode)
 
@@ -43,6 +44,7 @@ if __name__=="__main__":
                                " VALUES (:eid, :show, :airdate, :month_day, :year, :promotion)", values)
 
             log.info("Added episode %s to the database", eid)
+            added += 1
 
             for resource in episode.get('guest_resources', []):
                 # Add guest row if necessary
@@ -63,3 +65,4 @@ if __name__=="__main__":
             log.info("Already have episode %s in the database", eid)
 
     conn.commit()
+    log.info("Added %d episodes to the database", added)
