@@ -6,6 +6,7 @@ import time
 import types
 import sqlite3
 import random
+import pickle
 from text.classifiers import NaiveBayesClassifier
 from text.classifiers import DecisionTreeClassifier
 
@@ -150,7 +151,7 @@ def predict_using_heuristics(cursor):
 
     rows = cursor.fetchall()
     for row in rows:
-        log.info("episode %s, appearance id %s, resource %s", row['eid'], row['aid'], row['resource'])
+        #log.info("episode %s, appearance id %s, resource %s", row['eid'], row['aid'], row['resource'])
 
         predicate_objects = json.loads(row['dbpedia'])
         properties = pairs_to_dict(predicate_objects)
@@ -158,7 +159,7 @@ def predict_using_heuristics(cursor):
         for predictor in predictors:
             if predictor(properties):
                 label = get_class_label(predictor.__name__)
-                log.info('\t%s', label)
+                #log.info('\t%s', label)
 
                 cursor.execute("INSERT INTO labels (aid, label, source) VALUES (:aid, :label, :source)",
                                { 'aid': row['aid'], 'label': label, 'source': 'heuristics' })
@@ -200,17 +201,27 @@ def find_labeled_data(cursor, N):
 
     labeled_data = {}
 
+    # Keep track of which resources we've trained on, so we don't skew the model
+    # for guests that have appeared a lot
+    guest_labels = set([])
+
     rows = cursor.fetchall()
     for row in rows:
-        log.info("episode %s, appearance id %s, resource %s, label %s", row['eid'], row['aid'], row['resource'], row['label'])
-
         label = row['label']
+
+        key = (row['resource'], label)
+        if key in guest_labels:
+            continue
+
+        #log.info("episode %s, appearance id %s, resource %s, label %s", row['eid'], row['aid'], row['resource'], row['label'])
 
         if label not in labeled_data:
             labeled_data[label] = []
 
         document = get_text_document(row)
         labeled_data[label].append(document)
+
+        guest_labels.add(key)
 
     # Now pull out at most N random examples of each class
     random.seed(1)
@@ -230,7 +241,7 @@ def predict_using_classifiers(cursor, classifiers):
     rows = cursor.fetchall()
 
     for row in rows:
-        log.info("episode %s, appearance id %s, resource %s", row['eid'], row['aid'], row['resource'])
+        #log.info("episode %s, appearance id %s, resource %s", row['eid'], row['aid'], row['resource'])
         document = get_text_document(row)
 
         predictions = {}
@@ -242,9 +253,24 @@ def predict_using_classifiers(cursor, classifiers):
             cursor.execute("INSERT INTO labels (aid, label, source, confidence) VALUES (:aid, :label, :source, :confidence)",
                            { 'aid': row['aid'], 'label': label, 'confidence': predictions[label], 'source': 'classifier' })
 
-        sorted_predictions = sorted(predictions.items(), key=lambda x: x[1], reverse=True)
-        for i in range(len(sorted_predictions)):
-            log.info("\t%0.3f\t%s" % (sorted_predictions[i][1], sorted_predictions[i][0]))
+        #sorted_predictions = sorted(predictions.items(), key=lambda x: x[1], reverse=True)
+        #for i in range(len(sorted_predictions)):
+        #    log.info("\t%0.3f\t%s" % (sorted_predictions[i][1], sorted_predictions[i][0]))
+
+def print_and_save_classifiers(classifiers):
+    # Print stats about the classifiers
+    # Also pickle the classifiers
+    for c in classifiers:
+        print("%s classifier:" % c)
+        print("Trained on %d positive and %d negative examples" %
+              (len([e for e in classifiers[c].train_set if e[1] == 'positive']),
+               len([e for e in classifiers[c].train_set if e[1] == 'negative'])))
+        print("Top 30 informative features of %s classifier:" % c)
+        classifiers[c].show_informative_features(30)
+        print("\n")
+
+    pickle.dump(classifiers, open("classifiers.pickle", "wb"))
+
 
 if __name__=="__main__":
     db_file = sys.argv[1]
@@ -258,18 +284,15 @@ if __name__=="__main__":
 
     predict_using_heuristics(cursor)
 
-    raw_input("Press Enter to train classifiers using the pseudo-labeled data...")
+    #raw_input("Press Enter to train classifiers using the pseudo-labeled data...")
 
     # Train classifiers using N labeled examples based on heuristics
-    N = 100
+    N = 200
     classifiers = train_classifiers(cursor, N)
 
-    for c in classifiers:
-        log.info("Top 30 informative features of %s classifier:", c)
-        classifiers[c].show_informative_features(30)
-        log.info("")
+    print_and_save_classifiers(classifiers)
 
-    raw_input("Press Enter to train classifiers using the pseudo-labeled data...")
+    #raw_input("Press Enter to train classifiers using the pseudo-labeled data...")
 
     # Predict labels for examples that were not labeled yet
     predict_using_classifiers(cursor, classifiers)

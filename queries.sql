@@ -1,1 +1,4 @@
-select resource, show, count(*) as count from episodes join appearances using (eid) join guests using (resource) group by resource, show order by count;
+SELECT count(*) FROM (SELECT eid, aid, resource, label, dbpedia FROM episodes JOIN appearances USING (eid) JOIN guests USING (resource) JOIN labels USING (aid)  GROUP BY resource ORDER BY airdate);
+SELECT count(*) FROM (SELECT eid, appearances.aid, resource, label, dbpedia FROM episodes JOIN appearances USING (eid) JOIN guests USING (resource) LEFT JOIN labels l ON l.aid = appearances.aid WHERE l.aid IS NULL  GROUP BY resource ORDER BY airdate);
+
+--select resource, show, count(*) as count from episodes join appearances using (eid) join guests using (resource) group by resource, show order by count;
