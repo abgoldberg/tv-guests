@@ -16,7 +16,7 @@ except ImportError:
 
 def print_appearances(cursor):
 
-    print "Show, Airdate, AppearanceID, GuestResource, LabelSource,",
+    print "Show, Airdate, AppearanceID, GuestResource, WikipediaLink, LabelSource,",
     cursor.execute("SELECT label FROM labels GROUP BY label ORDER BY label")
     label_rows = cursor.fetchall()
     labels = [lrow['label'] for lrow in label_rows]
@@ -33,6 +33,7 @@ def print_appearances(cursor):
         label_rows = cursor.fetchall()
 
         print "%(show)s, %(airdate)s, %(aid)s, %(resource)s," % dict(row),
+        print "http://en.wikipedia.org/wiki/%s," % row['resource'],
         print label_rows[0]['source'] + ",",
 
         label_dict = {label:0 for label in labels}
