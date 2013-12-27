@@ -1,0 +1,396 @@
+Academic classifier:
+Trained on 69 positive and 1331 negative examples
+Top 30 informative features of Academic classifier:
+Most Informative Features
+http://dbpedia.org/ontology/field = True           positi : negati =     74.4 : 1.0
+http://dbpedia.org/property/field = True           positi : negati =     74.0 : 1.0
+               scientist = True           positi : negati =     68.0 : 1.0
+               professor = True           positi : negati =     42.4 : 1.0
+http://dbpedia.org/property/fields = True           positi : negati =     35.3 : 1.0
+               physicist = True           positi : negati =     31.7 : 1.0
+http://dbpedia.org/ontology/doctoralAdvisor = True           positi : negati =     31.7 : 1.0
+                 harvard = True           positi : negati =     31.7 : 1.0
+                academic = True           positi : negati =     28.0 : 1.0
+http://dbpedia.org/property/workplaces = True           positi : negati =     27.5 : 1.0
+               historian = True           positi : negati =     23.6 : 1.0
+                    1909 = True           positi : negati =     19.0 : 1.0
+http://dbpedia.org/property/mainInterests = True           positi : negati =     19.0 : 1.0
+              nonfiction = True           positi : negati =     19.0 : 1.0
+              journalism = True           positi : negati =     19.0 : 1.0
+http://dbpedia.org/ontology/mainInterest = True           positi : negati =     19.0 : 1.0
+                 society = True           positi : negati =     19.0 : 1.0
+http://dbpedia.org/ontology/notableIdea = True           positi : negati =     19.0 : 1.0
+http://dbpedia.org/property/home = True           positi : negati =     19.0 : 1.0
+http://dbpedia.org/property/notableIdeas = True           positi : negati =     19.0 : 1.0
+           environmental = True           positi : negati =     19.0 : 1.0
+                 skeptic = True           positi : negati =     19.0 : 1.0
+                     web = True           positi : negati =     19.0 : 1.0
+              astronomer = True           positi : negati =     19.0 : 1.0
+                creative = True           positi : negati =     19.0 : 1.0
+http://dbpedia.org/property/doctoralAdvisor = True           positi : negati =     19.0 : 1.0
+                futurist = True           positi : negati =     19.0 : 1.0
+http://dbpedia.org/property/workInstitution = True           positi : negati =     19.0 : 1.0
+http://dbpedia.org/property/yearsActive = True           negati : positi =     15.7 : 1.0
+                educator = True           positi : negati =     14.8 : 1.0
+
+
+Writer classifier:
+Trained on 200 positive and 1200 negative examples
+Top 30 informative features of Writer classifier:
+Most Informative Features
+                essayist = True           positi : negati =     21.9 : 1.0
+                novelist = True           positi : negati =     17.9 : 1.0
+                    food = True           positi : negati =     17.9 : 1.0
+                    poet = True           positi : negati =     14.5 : 1.0
+               memoirist = True           positi : negati =     13.9 : 1.0
+http://dbpedia.org/ontology/orderInOffice = True           negati : positi =     12.2 : 1.0
+http://dbpedia.org/property/order = True           negati : positi =     11.3 : 1.0
+                  writer = True           positi : negati =     10.9 : 1.0
+http://dbpedia.org/property/selibr = True           positi : negati =     10.8 : 1.0
+                   voice = True           positi : negati =     10.0 : 1.0
+                literary = True           positi : negati =     10.0 : 1.0
+                    born = True           positi : negati =     10.0 : 1.0
+http://dbpedia.org/property/institution = True           positi : negati =     10.0 : 1.0
+                 blogger = True           positi : negati =     10.0 : 1.0
+http://dbpedia.org/ontology/debut = True           positi : negati =     10.0 : 1.0
+                  comedy = True           positi : negati =     10.0 : 1.0
+             philosopher = True           positi : negati =     10.0 : 1.0
+http://dbpedia.org/ontology/associatedMusicalArtist = True           negati : positi =      8.7 : 1.0
+http://dbpedia.org/ontology/associatedBand = True           negati : positi =      8.7 : 1.0
+http://dbpedia.org/ontology/alias = True           negati : positi =      8.4 : 1.0
+               physician = True           positi : negati =      8.4 : 1.0
+http://dbpedia.org/property/period = True           positi : negati =      8.4 : 1.0
+                  author = True           positi : negati =      8.3 : 1.0
+                  critic = True           positi : negati =      8.1 : 1.0
+               columnist = True           positi : negati =      7.7 : 1.0
+http://dbpedia.org/ontology/notableWork = True           positi : negati =      7.6 : 1.0
+http://dbpedia.org/ontology/background = True           negati : positi =      7.5 : 1.0
+http://dbpedia.org/ontology/recordLabel = True           negati : positi =      7.0 : 1.0
+http://dbpedia.org/property/notableworks = True           positi : negati =      6.9 : 1.0
+              songwriter = True           negati : positi =      6.6 : 1.0
+
+
+Comedian classifier:
+Trained on 200 positive and 1200 negative examples
+Top 30 informative features of Comedian classifier:
+Most Informative Features
+http://dbpedia.org/property/termStart = True           negati : positi =     24.7 : 1.0
+http://dbpedia.org/ontology/activeYearsStartDate = True           negati : positi =     23.3 : 1.0
+http://dbpedia.org/ontology/religion = True           negati : positi =     22.0 : 1.0
+http://dbpedia.org/ontology/party = True           negati : positi =     13.9 : 1.0
+http://dbpedia.org/property/notableWork = True           positi : negati =     13.9 : 1.0
+http://dbpedia.org/property/active = True           positi : negati =     13.8 : 1.0
+http://dbpedia.org/property/medium = True           positi : negati =     12.4 : 1.0
+              politician = True           negati : positi =     12.1 : 1.0
+http://dbpedia.org/property/party = True           negati : positi =     10.3 : 1.0
+                scottish = True           positi : negati =     10.0 : 1.0
+http://dbpedia.org/property/birthDate = None           negati : positi =      9.9 : 1.0
+http://dbpedia.org/property/nyt = True           negati : positi =      9.2 : 1.0
+                comedian = True           positi : negati =      8.9 : 1.0
+http://dbpedia.org/property/votesmart = True           negati : positi =      8.4 : 1.0
+http://dbpedia.org/ontology/birthDate = None           negati : positi =      8.1 : 1.0
+http://dbpedia.org/property/fec = True           negati : positi =      8.1 : 1.0
+http://dbpedia.org/property/congbio = True           negati : positi =      7.9 : 1.0
+http://dbpedia.org/property/ontheissues = True           negati : positi =      7.8 : 1.0
+http://dbpedia.org/property/opensecrets = True           negati : positi =      7.8 : 1.0
+                   stand = True           positi : negati =      7.1 : 1.0
+http://dbpedia.org/property/subject = True           positi : negati =      7.0 : 1.0
+http://dbpedia.org/property/width = True           negati : positi =      7.0 : 1.0
+http://dbpedia.org/property/domesticpartner = True           positi : negati =      6.9 : 1.0
+http://dbpedia.org/ontology/height = True           negati : positi =      6.9 : 1.0
+              songwriter = True           negati : positi =      6.6 : 1.0
+http://dbpedia.org/ontology/influenced = True           positi : negati =      6.5 : 1.0
+http://dbpedia.org/property/religion = True           negati : positi =      6.3 : 1.0
+http://dbpedia.org/property/influenced = True           positi : negati =      6.2 : 1.0
+http://dbpedia.org/property/alongside = True           negati : positi =      6.1 : 1.0
+http://dbpedia.org/property/govtrack = True           negati : positi =      6.1 : 1.0
+
+
+Clergy classifier:
+Trained on 4 positive and 1396 negative examples
+Top 30 informative features of Clergy classifier:
+Most Informative Features
+http://dbpedia.org/property/ordination = True           positi : negati =    651.9 : 1.0
+http://dbpedia.org/property/consecration = True           positi : negati =    651.9 : 1.0
+http://dbpedia.org/property/province = True           positi : negati =    465.7 : 1.0
+http://dbpedia.org/property/otherPost = True           positi : negati =    279.4 : 1.0
+                vocalist = True           positi : negati =    279.4 : 1.0
+                 scholar = True           positi : negati =    167.6 : 1.0
+http://dbpedia.org/property/honorificPrefix = True           positi : negati =    130.4 : 1.0
+                 singing = True           positi : negati =    119.7 : 1.0
+http://dbpedia.org/property/pureUrl = True           positi : negati =     64.5 : 1.0
+http://dbpedia.org/property/term = True           positi : negati =     64.5 : 1.0
+http://dbpedia.org/property/honorificSuffix = True           positi : negati =     55.9 : 1.0
+                  record = True           positi : negati =     33.5 : 1.0
+http://dbpedia.org/property/date = True           positi : negati =     25.4 : 1.0
+                 dbpedia = True           positi : negati =     17.1 : 1.0
+                    http = True           positi : negati =     17.1 : 1.0
+                     org = True           positi : negati =     17.1 : 1.0
+                resource = True           positi : negati =     17.1 : 1.0
+                producer = True           positi : negati =      7.8 : 1.0
+http://dbpedia.org/property/class = True           positi : negati =      6.7 : 1.0
+http://dbpedia.org/property/alias = True           positi : negati =      6.7 : 1.0
+http://dbpedia.org/property/origin = True           positi : negati =      6.2 : 1.0
+http://dbpedia.org/ontology/alias = True           positi : negati =      5.6 : 1.0
+http://dbpedia.org/ontology/hometown = True           positi : negati =      5.3 : 1.0
+http://dbpedia.org/ontology/instrument = True           positi : negati =      4.7 : 1.0
+http://dbpedia.org/property/successor = True           positi : negati =      3.9 : 1.0
+http://dbpedia.org/property/predecessor = True           positi : negati =      3.6 : 1.0
+http://dbpedia.org/property/termEnd = True           positi : negati =      3.5 : 1.0
+                  bishop = None           negati : positi =      3.3 : 1.0
+http://dbpedia.org/property/consecration = None           negati : positi =      3.3 : 1.0
+http://dbpedia.org/property/ordination = None           negati : positi =      3.3 : 1.0
+
+
+Business classifier:
+Trained on 29 positive and 1371 negative examples
+Top 30 informative features of Business classifier:
+Most Informative Features
+http://dbpedia.org/property/networth = True           positi : negati =    167.7 : 1.0
+                     ceo = True           positi : negati =    167.7 : 1.0
+             businessman = True           positi : negati =    137.2 : 1.0
+http://dbpedia.org/ontology/networth = True           positi : negati =     96.5 : 1.0
+                business = True           positi : negati =     55.9 : 1.0
+                software = True           positi : negati =     45.7 : 1.0
+                 company = True           positi : negati =     45.7 : 1.0
+                  mexico = True           positi : negati =     45.7 : 1.0
+                   motor = True           positi : negati =     45.7 : 1.0
+                    ford = True           positi : negati =     45.7 : 1.0
+                engineer = True           positi : negati =     27.4 : 1.0
+http://dbpedia.org/property/portaldisp = True           positi : negati =     27.4 : 1.0
+http://dbpedia.org/property/netWorth = True           positi : negati =     27.4 : 1.0
+http://dbpedia.org/property/updated = True           positi : negati =     24.6 : 1.0
+http://dbpedia.org/property/salary = True           positi : negati =     24.2 : 1.0
+http://dbpedia.org/ontology/salary = True           positi : negati =     24.2 : 1.0
+http://dbpedia.org/property/footer = True           positi : negati =     19.6 : 1.0
+               executive = True           positi : negati =     19.6 : 1.0
+                 founder = True           positi : negati =     15.2 : 1.0
+http://dbpedia.org/property/blank = True           positi : negati =     12.5 : 1.0
+http://dbpedia.org/property/data = True           positi : negati =     12.5 : 1.0
+http://dbpedia.org/property/boards = True           positi : negati =     10.6 : 1.0
+http://dbpedia.org/property/pureUrl = True           positi : negati =     10.6 : 1.0
+http://dbpedia.org/property/quoted = True           positi : negati =     10.6 : 1.0
+http://dbpedia.org/property/signatureAlt = True           positi : negati =     10.6 : 1.0
+http://dbpedia.org/ontology/board = True           positi : negati =     10.6 : 1.0
+http://dbpedia.org/property/movement = True           positi : negati =      9.1 : 1.0
+http://dbpedia.org/ontology/otherParty = True           positi : negati =      9.1 : 1.0
+http://dbpedia.org/property/otherparty = True           positi : negati =      9.1 : 1.0
+http://dbpedia.org/property/salign = True           positi : negati =      8.1 : 1.0
+
+
+Policy classifier:
+Trained on 38 positive and 1362 negative examples
+Top 30 informative features of Policy classifier:
+Most Informative Features
+                  rights = True           positi : negati =    104.8 : 1.0
+              consultant = True           positi : negati =     62.9 : 1.0
+            conservative = True           positi : negati =     58.2 : 1.0
+                activist = True           positi : negati =     54.9 : 1.0
+              strategist = True           positi : negati =     48.9 : 1.0
+               christian = True           positi : negati =     34.9 : 1.0
+                   civil = True           positi : negati =     34.9 : 1.0
+http://dbpedia.org/property/father = True           positi : negati =     34.9 : 1.0
+              journalism = True           positi : negati =     34.9 : 1.0
+                  policy = True           positi : negati =     34.9 : 1.0
+http://dbpedia.org/property/imageCaption = True           positi : negati =     34.9 : 1.0
+                 analyst = True           positi : negati =     34.9 : 1.0
+           environmental = True           positi : negati =     34.9 : 1.0
+                attorney = True           positi : negati =     34.9 : 1.0
+             immigration = True           positi : negati =     34.9 : 1.0
+http://dbpedia.org/property/royalName = True           positi : negati =     34.9 : 1.0
+http://dbpedia.org/property/altstyle = True           positi : negati =     34.9 : 1.0
+                pollster = True           positi : negati =     34.9 : 1.0
+http://dbpedia.org/property/convictionStatus = True           positi : negati =     34.9 : 1.0
+                    care = True           positi : negati =     34.9 : 1.0
+                  design = True           positi : negati =     34.9 : 1.0
+http://dbpedia.org/property/reign = True           positi : negati =     34.9 : 1.0
+                advocate = True           positi : negati =     34.9 : 1.0
+http://dbpedia.org/property/mother = True           positi : negati =     34.9 : 1.0
+http://dbpedia.org/property/house = True           positi : negati =     34.9 : 1.0
+http://dbpedia.org/property/succession = True           positi : negati =     34.9 : 1.0
+http://dbpedia.org/property/organization = True           positi : negati =     27.2 : 1.0
+             palestinian = True           positi : negati =     21.0 : 1.0
+http://dbpedia.org/property/offstyle = True           positi : negati =     21.0 : 1.0
+http://dbpedia.org/property/convictionPenalty = True           positi : negati =     21.0 : 1.0
+
+
+Politician classifier:
+Trained on 200 positive and 1200 negative examples
+Top 30 informative features of Politician classifier:
+Most Informative Features
+http://dbpedia.org/ontology/region = True           positi : negati =    233.0 : 1.0
+http://dbpedia.org/property/district = True           positi : negati =    205.1 : 1.0
+http://dbpedia.org/property/order = True           positi : negati =     76.1 : 1.0
+http://dbpedia.org/ontology/orderInOffice = True           positi : negati =     72.1 : 1.0
+http://dbpedia.org/ontology/deputy = True           positi : negati =     65.7 : 1.0
+http://dbpedia.org/property/deputy = True           positi : negati =     65.7 : 1.0
+http://dbpedia.org/property/congbio = True           positi : negati =     60.2 : 1.0
+http://dbpedia.org/ontology/profession = True           positi : negati =     56.4 : 1.0
+http://dbpedia.org/property/cspan = True           positi : negati =     55.9 : 1.0
+http://dbpedia.org/property/votesmart = True           positi : negati =     55.4 : 1.0
+http://dbpedia.org/ontology/associate = True           positi : negati =     53.8 : 1.0
+http://dbpedia.org/property/lieutenant = True           positi : negati =     52.1 : 1.0
+http://dbpedia.org/ontology/lieutenant = True           positi : negati =     52.1 : 1.0
+http://dbpedia.org/property/state = True           positi : negati =     51.9 : 1.0
+http://dbpedia.org/property/nga = True           positi : negati =     49.8 : 1.0
+http://dbpedia.org/property/legistorm = True           positi : negati =     49.4 : 1.0
+http://dbpedia.org/property/govtrack = True           positi : negati =     45.5 : 1.0
+http://dbpedia.org/property/opensecrets = True           positi : negati =     43.9 : 1.0
+http://dbpedia.org/property/profession = True           positi : negati =     43.4 : 1.0
+http://dbpedia.org/property/opencong = True           positi : negati =     42.9 : 1.0
+http://dbpedia.org/ontology/successor = True           positi : negati =     41.8 : 1.0
+http://dbpedia.org/property/leader = True           positi : negati =     41.8 : 1.0
+http://dbpedia.org/property/jr/sr = True           positi : negati =     41.8 : 1.0
+http://dbpedia.org/property/fec = True           positi : negati =     40.6 : 1.0
+http://dbpedia.org/property/as = True           positi : negati =     39.4 : 1.0
+                governor = True           positi : negati =     37.8 : 1.0
+               secretary = True           positi : negati =     37.8 : 1.0
+http://dbpedia.org/property/washpo = True           positi : negati =     37.2 : 1.0
+http://dbpedia.org/property/succeeded = True           positi : negati =     35.3 : 1.0
+http://dbpedia.org/property/preceded = True           positi : negati =     34.5 : 1.0
+
+
+Athlete classifier:
+Trained on 79 positive and 1321 negative examples
+Top 30 informative features of Athlete classifier:
+Most Informative Features
+http://dbpedia.org/ontology/position = True           positi : negati =    347.0 : 1.0
+http://dbpedia.org/ontology/number = True           positi : negati =    300.8 : 1.0
+http://dbpedia.org/ontology/team = True           positi : negati =    261.1 : 1.0
+http://dbpedia.org/property/heightFt = True           positi : negati =    258.9 : 1.0
+http://dbpedia.org/property/position = True           positi : negati =    252.6 : 1.0
+http://dbpedia.org/property/heightIn = True           positi : negati =    247.9 : 1.0
+http://dbpedia.org/property/debutyear = True           positi : negati =    228.0 : 1.0
+                  player = True           positi : negati =    218.5 : 1.0
+http://dbpedia.org/ontology/draftYear = True           positi : negati =    214.8 : 1.0
+http://dbpedia.org/property/debutteam = True           positi : negati =    208.2 : 1.0
+http://dbpedia.org/property/stat1label = True           positi : negati =    203.8 : 1.0
+http://dbpedia.org/property/stat2label = True           positi : negati =    203.8 : 1.0
+http://dbpedia.org/property/stat3value = True           positi : negati =    203.8 : 1.0
+http://dbpedia.org/property/stat2value = True           positi : negati =    203.8 : 1.0
+http://dbpedia.org/property/stat3label = True           positi : negati =    203.8 : 1.0
+http://dbpedia.org/property/stat1value = True           positi : negati =    203.8 : 1.0
+http://dbpedia.org/property/highlights = True           positi : negati =    200.7 : 1.0
+http://dbpedia.org/property/careerStart = True           positi : negati =    192.8 : 1.0
+http://dbpedia.org/property/draftround = True           positi : negati =    175.2 : 1.0
+http://dbpedia.org/property/draftpick = True           positi : negati =    175.2 : 1.0
+http://dbpedia.org/property/draftyear = True           positi : negati =    175.2 : 1.0
+http://dbpedia.org/property/bbr = True           positi : negati =    170.8 : 1.0
+http://dbpedia.org/property/highSchool = True           positi : negati =    170.8 : 1.0
+http://dbpedia.org/property/team = True           positi : negati =    168.6 : 1.0
+http://dbpedia.org/property/statlabel = True           positi : negati =    155.3 : 1.0
+http://dbpedia.org/property/statvalue = True           positi : negati =    155.3 : 1.0
+http://dbpedia.org/property/college = True           positi : negati =    152.4 : 1.0
+http://dbpedia.org/ontology/draftPick = True           positi : negati =    142.1 : 1.0
+http://dbpedia.org/ontology/draftRound = True           positi : negati =    142.1 : 1.0
+http://dbpedia.org/property/nfl = True           positi : negati =    142.1 : 1.0
+
+
+Musician classifier:
+Trained on 181 positive and 1219 negative examples
+Top 30 informative features of Musician classifier:
+Most Informative Features
+http://dbpedia.org/property/format = True           positi : negati =     51.4 : 1.0
+http://dbpedia.org/property/typ = True           positi : negati =     29.0 : 1.0
+http://dbpedia.org/property/notableInstruments = True           positi : negati =     26.2 : 1.0
+http://dbpedia.org/ontology/instrument = True           positi : negati =     25.9 : 1.0
+                musician = True           positi : negati =     23.7 : 1.0
+http://dbpedia.org/ontology/associatedMusicalArtist = True           positi : negati =     22.5 : 1.0
+http://dbpedia.org/ontology/associatedBand = True           positi : negati =     22.5 : 1.0
+http://dbpedia.org/ontology/background = True           positi : negati =     22.1 : 1.0
+              songwriter = True           positi : negati =     21.5 : 1.0
+http://dbpedia.org/ontology/recordLabel = True           positi : negati =     20.8 : 1.0
+http://dbpedia.org/property/instrument = True           positi : negati =     20.7 : 1.0
+                  singer = True           positi : negati =     20.5 : 1.0
+http://dbpedia.org/property/pos = True           positi : negati =     20.1 : 1.0
+http://dbpedia.org/property/associatedActs = True           positi : negati =     19.7 : 1.0
+http://dbpedia.org/property/label = True           positi : negati =     19.6 : 1.0
+http://dbpedia.org/property/background = True           positi : negati =     19.5 : 1.0
+http://dbpedia.org/property/residence = True           negati : positi =     16.5 : 1.0
+http://dbpedia.org/property/origin = True           positi : negati =     15.9 : 1.0
+               guitarist = True           positi : negati =     15.6 : 1.0
+http://dbpedia.org/property/birthDate = None           negati : positi =     14.8 : 1.0
+http://dbpedia.org/property/landscape = True           positi : negati =     14.7 : 1.0
+http://dbpedia.org/ontology/activeYearsStartYear = None           negati : positi =     14.1 : 1.0
+http://dbpedia.org/property/filename = True           positi : negati =     12.5 : 1.0
+http://dbpedia.org/property/header = True           positi : negati =     12.4 : 1.0
+http://dbpedia.org/ontology/religion = True           negati : positi =     11.7 : 1.0
+http://dbpedia.org/property/alias = True           positi : negati =     11.6 : 1.0
+                   multi = True           positi : negati =     11.2 : 1.0
+http://www.georss.org/georss/point = True           positi : negati =     11.2 : 1.0
+                   irish = True           positi : negati =     11.2 : 1.0
+http://www.w3.org/2003/01/geo/wgs84_pos#geometry = True           positi : negati =     11.2 : 1.0
+
+
+Actor classifier:
+Trained on 200 positive and 1200 negative examples
+Top 30 informative features of Actor classifier:
+Most Informative Features
+http://dbpedia.org/property/party = True           negati : positi =     24.3 : 1.0
+http://dbpedia.org/ontology/party = True           negati : positi =     23.3 : 1.0
+http://dbpedia.org/property/termEnd = True           negati : positi =     22.5 : 1.0
+http://dbpedia.org/property/successor = True           negati : positi =     20.0 : 1.0
+http://dbpedia.org/ontology/activeYearsEndDate = True           negati : positi =     19.8 : 1.0
+http://dbpedia.org/ontology/successor = True           negati : positi =     19.0 : 1.0
+http://dbpedia.org/ontology/termPeriod = True           negati : positi =     18.7 : 1.0
+http://dbpedia.org/property/placeOfBirth = None           negati : positi =     16.5 : 1.0
+http://dbpedia.org/ontology/orderInOffice = True           negati : positi =     12.2 : 1.0
+              politician = True           negati : positi =     12.1 : 1.0
+http://dbpedia.org/property/order = True           negati : positi =     11.3 : 1.0
+http://dbpedia.org/property/termStart = True           negati : positi =     10.5 : 1.0
+http://dbpedia.org/property/datastyle = True           positi : negati =     10.0 : 1.0
+http://dbpedia.org/property/labelstyle = True           positi : negati =     10.0 : 1.0
+                national = True           positi : negati =     10.0 : 1.0
+http://dbpedia.org/property/headerstyle = True           positi : negati =     10.0 : 1.0
+http://dbpedia.org/ontology/activeYearsStartDate = True           negati : positi =      9.9 : 1.0
+http://dbpedia.org/property/nyt = True           negati : positi =      9.2 : 1.0
+http://dbpedia.org/property/predecessor = True           negati : positi =      9.1 : 1.0
+http://dbpedia.org/property/ontheissues = True           negati : positi =      7.8 : 1.0
+                  artist = True           positi : negati =      7.7 : 1.0
+http://dbpedia.org/property/office = True           negati : positi =      7.3 : 1.0
+http://dbpedia.org/ontology/office = True           negati : positi =      7.0 : 1.0
+http://dbpedia.org/property/profession = True           negati : positi =      6.8 : 1.0
+                  author = True           negati : positi =      6.4 : 1.0
+http://dbpedia.org/property/cspan = True           negati : positi =      6.2 : 1.0
+                  health = True           positi : negati =      6.0 : 1.0
+                 theater = True           positi : negati =      6.0 : 1.0
+http://dbpedia.org/property/draws = True           positi : negati =      6.0 : 1.0
+                austrian = True           positi : negati =      6.0 : 1.0
+
+
+Journalist classifier:
+Trained on 200 positive and 1200 negative examples
+Top 30 informative features of Journalist classifier:
+Most Informative Features
+http://dbpedia.org/property/gender = True           positi : negati =     27.5 : 1.0
+           correspondent = True           positi : negati =     21.9 : 1.0
+              journalist = True           positi : negati =     20.7 : 1.0
+http://dbpedia.org/property/credits = True           positi : negati =     20.0 : 1.0
+http://dbpedia.org/property/background = True           negati : positi =     18.4 : 1.0
+                    news = True           positi : negati =     17.9 : 1.0
+                reporter = True           positi : negati =     17.9 : 1.0
+                  anchor = True           positi : negati =     17.9 : 1.0
+http://dbpedia.org/ontology/background = True           negati : positi =     17.8 : 1.0
+http://dbpedia.org/property/label = True           negati : positi =     17.1 : 1.0
+http://dbpedia.org/ontology/recordLabel = True           negati : positi =     16.6 : 1.0
+                  singer = True           negati : positi =     15.9 : 1.0
+http://dbpedia.org/property/associatedActs = True           negati : positi =     15.5 : 1.0
+http://dbpedia.org/property/instrument = True           negati : positi =     15.1 : 1.0
+http://dbpedia.org/ontology/associatedMusicalArtist = True           negati : positi =     14.7 : 1.0
+http://dbpedia.org/ontology/associatedBand = True           negati : positi =     14.7 : 1.0
+                    game = True           positi : negati =     13.9 : 1.0
+http://dbpedia.org/ontology/activeYearsStartDate = True           negati : positi =     13.9 : 1.0
+http://dbpedia.org/property/age = True           positi : negati =     13.1 : 1.0
+http://dbpedia.org/property/predecessor = True           negati : positi =     12.8 : 1.0
+              politician = True           negati : positi =     12.1 : 1.0
+http://dbpedia.org/property/successor = True           negati : positi =     11.9 : 1.0
+                   actor = True           negati : positi =     11.9 : 1.0
+http://dbpedia.org/ontology/activeYearsEndDate = True           negati : positi =     11.8 : 1.0
+                musician = True           negati : positi =     10.2 : 1.0
+                   times = True           positi : negati =     10.0 : 1.0
+http://dbpedia.org/ontology/ethnicity = True           positi : negati =      8.6 : 1.0
+http://dbpedia.org/property/president = True           negati : positi =      8.4 : 1.0
+http://dbpedia.org/ontology/alias = True           negati : positi =      8.4 : 1.0
+http://dbpedia.org/property/p = True           positi : negati =      8.4 : 1.0
+
+
