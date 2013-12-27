@@ -21,14 +21,22 @@ except ImportError:
 punct_re = re.compile(r'[' + string.punctuation + ']')
 stop_words = set(punct_re.sub(' ', ' '.join(open('english.stop.txt', 'r').readlines()).lower()).split())
 
+def is_ascii(s):
+    if all(ord(c) < 128 for c in s):
+        return True
+    else:
+        log.debug("Skipping non-ascii token %s", s)
+        return False
+
 # Identity feature extractor
 def token_extractor(document):
-    return dict((token,True) for token in document.split() if token not in stop_words)
+    return dict((token,True) for token in document.split() if token not in stop_words and is_ascii(token))
 
 def get_description_tokens(items):
     desc = ' '.join(items.get('http://dbpedia.org/property/shortDescription', []) +
                     items.get('http://purl.org/dc/elements/1.1/description', []) +
                     items.get('http://purl.org/dc/elements/1.1/description', []))
+    desc = desc.replace(u'\u2013', '-')
     tokens = set(punct_re.sub(' ', desc.lower()).split())
     return tokens
 
@@ -175,6 +183,7 @@ def train_classifiers(cursor, N):
 
     # For each labeled example, train all classifiers as either positive or negative example
     for label, documents in labeled_data.iteritems():
+        log.info("...updating classifiers using %s labels", label)
         for document in documents:
             for c in classifiers:
                 if label == c:
@@ -240,7 +249,10 @@ def predict_using_classifiers(cursor, classifiers):
                    "ORDER BY airdate")
     rows = cursor.fetchall()
 
-    for row in rows:
+    for idx,row in enumerate(rows):
+        if idx % 10 == 0:
+            log.info("...predicting unlabeled appearance %d", idx)
+
         #log.info("episode %s, appearance id %s, resource %s", row['eid'], row['aid'], row['resource'])
         document = get_text_document(row)
 
@@ -282,19 +294,23 @@ if __name__=="__main__":
     clear_labels(cursor, 'heuristics')
     clear_labels(cursor, 'classifier')
 
+    log.info("Predicting labels using heuristics...")
     predict_using_heuristics(cursor)
 
     #raw_input("Press Enter to train classifiers using the pseudo-labeled data...")
 
-    # Train classifiers using N labeled examples based on heuristics
+    # Train classifiers using N labeled examples per label based on heuristics
     N = 200
+    log.info("Training classifiers using upto %d guests per label...", N)
     classifiers = train_classifiers(cursor, N)
 
+    log.info("Printing and saving classifiers...")
     print_and_save_classifiers(classifiers)
 
     #raw_input("Press Enter to train classifiers using the pseudo-labeled data...")
 
     # Predict labels for examples that were not labeled yet
+    log.info("Predicting labels using classifiers...")
     predict_using_classifiers(cursor, classifiers)
 
     conn.commit()
