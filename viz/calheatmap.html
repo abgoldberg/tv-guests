@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>Calendar Heat Maps</title>
+<script type="text/javascript" src="//d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
+<style>
+body {
+font-family: sans-serif;
+margin: 48px;
+}
+</style>
+</head>
+<body>
+
+<script type="text/javascript">
+  var shows = ["tds", "colbert", "combined"];
+  var show_names = ["The Daily Show", "The Colbert Report", "Combined"];
+  var categories = ["Politician", "Journalist", "Actor", "Academic"];
+  var cals = {};
+  var body = document.body;
+  for (var s = 0; s < shows.length; s++) {
+     for (var c = 0; c < categories.length; c++) {
+        var id = shows[s] + "-" + categories[c].toLowerCase();
+
+        var head = document.createElement("h3");
+        head.innerText = show_names[s] + " - " + categories[c];
+        body.appendChild(head);
+
+        var div = document.createElement("div");
+        div.setAttribute("id", id);
+        body.appendChild(div);
+
+        cals[id] = new CalHeatMap();
+        cals[id].init({
+           itemSelector: '#'+id,
+           start: new Date(2003, 0),
+           data: "http://localhost:6477/scripts/calheatmap.py?show="+shows[s]+"&category="+categories[c],
+           domain: "year",
+           subDomain: "x_month",
+           subDomainTextFormat: function(date, value) {
+                         return date.getMonth()+1;
+                         },
+           domainGutter: 12,
+           cellPadding: 2,
+           cellSize: 16,
+           colLimit: 3,
+           verticalOrientation: false,
+           tooltip: true,
+           legend: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+           legendColors: ["#ecf5e2", "#232181"]
+        });
+     }
+   }
+</script>
+
+
+</body>
+</html>
