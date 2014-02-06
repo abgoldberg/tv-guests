@@ -7,7 +7,7 @@
 
 <style>
 body {
-  font: 11px sans-serif;
+  font: 12px sans-serif;
 }
 
 .axis path,
@@ -33,7 +33,7 @@ body {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script>
-var margin = {top: 40, right: 100, bottom: 30, left: 40},
+var margin = {top: 40, right: 100, bottom: 50, left: 50},
     width = 600 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
 
@@ -110,10 +110,10 @@ d3.json("scripts/scatter.py?group_by_category="+(group_by_category ? "1" : "0"),
       .call(xAxis)
     .append("text")
       .attr("class", "label")
-      .attr("x", width)
-      .attr("y", -6)
-      .style("text-anchor", "end")
-      .text("Count (TDS)");
+      .attr("x", width/2)
+      .attr("y", 40)
+      .style("text-anchor", "middle")
+      .text("# Appearances on The Daily Show (TDS)");
 
   // y-axis
   svg.append("g")
@@ -122,10 +122,11 @@ d3.json("scripts/scatter.py?group_by_category="+(group_by_category ? "1" : "0"),
     .append("text")
       .attr("class", "label")
       .attr("transform", "rotate(-90)")
-      .attr("y", 6)
+      .attr("y", -50)
+      .attr("x", -height/2)
       .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Count (Colbert)");
+      .style("text-anchor", "middle")
+      .text("# Appearances on The Colbert Report");
 
   // draw dots
   svg.selectAll(".dot")
@@ -149,6 +150,24 @@ d3.json("scripts/scatter.py?group_by_category="+(group_by_category ? "1" : "0"),
                .duration(500)
                .style("opacity", 0);
       });
+
+  if (!group_by_category) {
+  // show labels for extreme points
+   d3.select("body").selectAll("div")
+      .data(data)
+    .enter().append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 1)
+      .style("left", function (d) { return (margin.left + xMap(d) + 5) + "px";})
+      .style("top", function (d) { return (margin.top + yMap(d) - 28) + "px";})
+      .html(function(d) {
+           if (d["tds"] + d["colbert"] >= 15) {
+               return d["description"].replace("_"," ") + ": " + d["label"] + "<br/> (" + xLabel(d) + ", " + yLabel(d) + ")";
+           } else {
+               return "";
+           }
+      });
+  }
 
   // draw legend
   var legend = svg.selectAll(".legend")
