@@ -35,12 +35,12 @@ margin: 48px;
         cals[id].init({
            itemSelector: '#'+id,
            start: new Date(2003, 0),
-           data: "http://localhost:6477/scripts/calheatmap.py?show="+shows[s]+"&category="+categories[c],
+           data: "scripts/calheatmap.py?show="+shows[s]+"&category="+categories[c],
            domain: "year",
            subDomain: "x_month",
-           subDomainTextFormat: function(date, value) {
-                         return date.getMonth()+1;
-                         },
+           //subDomainTextFormat: function(date, value) {
+           //              return date.getMonth()+1;
+           //              },
            domainGutter: 12,
            cellPadding: 2,
            cellSize: 16,
@@ -49,6 +49,7 @@ margin: 48px;
            tooltip: true,
            legend: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
            legendColors: ["#ecf5e2", "#232181"]
+           //legendColors: ["#ccc", "#111"]
         });
      }
    }
