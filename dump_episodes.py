@@ -19,7 +19,7 @@ def print_appearances(cursor):
     print "Show, Airdate, AppearanceID, GuestResource, WikipediaLink, LabelSource,",
     cursor.execute("SELECT label FROM labels GROUP BY label ORDER BY label")
     label_rows = cursor.fetchall()
-    labels = [lrow['label'] for lrow in label_rows]
+    labels = [lrow['label'] for lrow in label_rows if lrow['label'] != 'Other']
     print ", ".join(labels)
 
     cursor.execute("SELECT show, date(airdate) as airdate, eid, aid, resource FROM episodes " +
@@ -29,14 +29,17 @@ def print_appearances(cursor):
 
     rows = cursor.fetchall()
     for row in rows:
-        cursor.execute("SELECT label, confidence, source FROM labels WHERE aid = :aid ORDER BY label", { 'aid': row['aid'] })
+        cursor.execute("SELECT label, confidence, source FROM labels WHERE aid = :aid AND source NOT LIKE 'amy' ORDER BY label", { 'aid': row['aid'] })
         label_rows = cursor.fetchall()
 
-        print "%(show)s, %(airdate)s, %(aid)s, %(resource)s," % dict(row),
-        print "http://en.wikipedia.org/wiki/%s," % row['resource'],
+        resource = row['resource'].replace(',', '_')
+
+        print "%(show)s, %(airdate)s, %(aid)s," % dict(row),
+        print "%s,"% resource,
+        print "http://en.wikipedia.org/wiki/%s," % resource,
         print label_rows[0]['source'] + ",",
 
-        label_dict = {label:0 for label in labels}
+        label_dict = {label:0 for label in labels if label != 'Other'}
         for lrow in label_rows:
             label_dict[lrow['label']] = round(lrow['confidence'],2)
 
